@@ -22,6 +22,7 @@ const Auth = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }
     const handleSuccess = async(res) => {
+        console.log(res)
         const result = jwt_decode(res?.credential);
         const token = res?.credential;
         try {

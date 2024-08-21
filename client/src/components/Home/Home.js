@@ -1,9 +1,8 @@
 import { AppBar, Button, Container, Grid, Grow, Paper, TextField } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Posts from "../Posts/Posts"
 import Form from "../Forms/Forms"
 import { useDispatch } from "react-redux"
-import { getPosts } from "../../actions/posts"
 import Pagination from "../Pagination"
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min'
 import useStyles from './styles'
