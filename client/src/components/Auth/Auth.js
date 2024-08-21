@@ -3,7 +3,7 @@ import useStyles from "./styles"
 import { Avatar, Button, Container, Grid, Paper, Typography } from '@material-ui/core';
 import LockOutLinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input';
-import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,8 @@ const initialState = { firstName:"" , lastName:"", email:"", password:"", confir
 const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignUp, setIsSignUp] = useState(false);
-    const [formData, setFormData] = useState(initialState)
+    const [formData, setFormData] = useState(initialState);
+    const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -37,13 +38,25 @@ const Auth = () => {
     const switchMode = () => {
         setIsSignUp((prevIsSignUp) => !prevIsSignUp);
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+
         if (isSignUp) {
-            dispatch(signUp(formData, history))
+            try {
+                await dispatch(signUp(formData, history));
+            } catch (error) {
+                console.log(error);
+            }
         } else {
-            dispatch(signIn(formData, history))
+            try {
+                await dispatch(signIn(formData, history));
+            } catch (error) {
+                console.log(error);
+            }
         }
+
+        setIsLoading(false);
     }
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -67,7 +80,7 @@ const Auth = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignUp && <Input name="confirmPassword" label="ConFirm Password" handleChange={handleChange} type='password' />}
                     </Grid>
-                    <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>{isSignUp ? "Sign Up" : "Sign In"}</Button>
+                    <Button type='submit' disabled={isLoading} fullWidth variant='contained' color='primary' className={classes.submit}>{isSignUp ? "Sign Up" : "Sign In"}</Button>
                     {isSignUp ? (
                         <div></div>
                     ) : <GoogleLogin
