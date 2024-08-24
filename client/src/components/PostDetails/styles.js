@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
+      flexDirection: 'column-reverse',
     },
   },
   section: {
