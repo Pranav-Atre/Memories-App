@@ -39,7 +39,7 @@ const Post = ({ post, setCurrentId }) => {
     }
     return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
   }
-  const openPost = () => history.push(`posts/${post._id}`)
+  const openPost = () => history.push(`/posts/${post._id}`)
   return (
     <Card className={classes.card} raised elevation={6}>
       <div onClick={openPost} className={classes.cardAction} role="button" tabIndex={0} onKeyDown={openPost}>
